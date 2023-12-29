@@ -7,11 +7,13 @@ public class Movement : MonoBehaviour
 
     public float angularSpeed = 50;
     Rigidbody rb;
+    AudioSource audioSource;
 
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        audioSource = GetComponent<AudioSource>();
     }
 
 
@@ -46,7 +48,11 @@ public class Movement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space))
         {
+            if (!audioSource.isPlaying) audioSource.Play();
             rb.AddRelativeForce(Vector3.up * thrust * Time.deltaTime);
+        }
+        else {
+            audioSource.Stop();
         }
     }
 }

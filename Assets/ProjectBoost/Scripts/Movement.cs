@@ -1,5 +1,9 @@
 using UnityEngine;
 
+/// <summary>
+/// Handles movement and rotation logic for a spaceship controller.
+/// Uses input and physics to control thrust and rotation.
+/// </summary>
 public class Movement : MonoBehaviour
 {
     const float deadzone = 0.01f;
@@ -10,6 +14,9 @@ public class Movement : MonoBehaviour
     AudioSource audioSource;
 
 
+    /// <summary>
+    /// Initializes the Rigidbody and AudioSource fields.
+    /// </summary>
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -17,15 +24,21 @@ public class Movement : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// Calls the ProcessThrust() and ProcessRotation() methods.
+    /// </summary>
     void Update()
     {
         ProcessThrust();
         ProcessRotation();
     }
 
+    /// <summary>
+    /// Processes the rotation of the spaceship based on the horizontal input axis.
+    /// </summary>
     private void ProcessRotation()
     {
-        
+
         var val = Input.GetAxis("Horizontal");
         if (val < -deadzone)
         {
@@ -37,6 +50,10 @@ public class Movement : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Applies rotation to the spaceship using the given vector and angular speed.
+    /// </summary>
+    /// <param name="vector">The vector representing the rotation direction.</param>
     private void ApplyRotation(Vector3 vector)
     {
         rb.freezeRotation = true;
@@ -44,6 +61,9 @@ public class Movement : MonoBehaviour
         rb.freezeRotation = false;
     }
 
+    /// <summary>
+    /// Processes the thrust of the spaceship based on the space key input.
+    /// </summary>
     void ProcessThrust()
     {
         if (Input.GetKey(KeyCode.Space))
@@ -51,7 +71,8 @@ public class Movement : MonoBehaviour
             if (!audioSource.isPlaying) audioSource.Play();
             rb.AddRelativeForce(Vector3.up * thrust * Time.deltaTime);
         }
-        else {
+        else
+        {
             audioSource.Stop();
         }
     }

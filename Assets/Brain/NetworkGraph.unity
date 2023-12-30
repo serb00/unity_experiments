@@ -569,7 +569,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NeuronPrefab: {fileID: 2809089809237148101, guid: 80e653a8e4a5d412398fe550584e582d, type: 3}
   ConnectionPrefab: {fileID: 4682886125053514474, guid: 7127f13e5c9794dc9906bd77715088f7, type: 3}
-  Margin: 0
+  SelfConnectionPrefab: {fileID: 4682886125053514474, guid: bd313468d4e684550a426cd660914439, type: 3}
+  connectionLenghtOffset: 10
   InputOutputSpacing: 20
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

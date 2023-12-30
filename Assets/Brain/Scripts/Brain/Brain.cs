@@ -1,3 +1,4 @@
+using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -19,8 +20,14 @@ public class Brain {
 
     private void InitializeMappings() {
         // Initialize inputMappings and outputMappings
-        // Example: inputMappings[0] = new Sensor(...);
-        // Example: outputMappings[0] = new Action(...);
+        for (int i = 0; i < numInputNeurons; i++)
+        {
+            inputMappings[i] = new Sensor();
+        }
+        for (int i = 0; i < numOutputNeurons; i++)
+        {
+            outputMappings[i] = new Action();
+        }
     }
 
     public void UpdateBrain() {
@@ -39,24 +46,6 @@ public class Brain {
         }
     }
 
-    public IEnumerable<Neuron> GetInputNeurons()
-    {
-        return neuralNetwork.GetNeurons(0, numInputNeurons);
-    }
-
-    public IEnumerable<Neuron> GetOutputNeurons() {
-        return neuralNetwork.GetNeurons(
-            neuralNetwork.Neurons.Count - numOutputNeurons,
-            neuralNetwork.Neurons.Count);
-    }
-
-    public IEnumerable<Neuron> GetHiddenNeurons()
-    {
-        return neuralNetwork.GetNeurons(
-            numInputNeurons,
-            neuralNetwork.Neurons.Count - numOutputNeurons);
-    }
-
     public IEnumerable<Neuron> GetAllNeurons() {
         return neuralNetwork.Neurons;
     }
@@ -66,7 +55,13 @@ public class Brain {
     }
 
     public float GetNeuron(int index){
-        return neuralNetwork.GetOutputs(index, index).First<float>();
+        float val;
+        val = neuralNetwork.GetNeuronValue(index);
+        return val;
+    }
+
+    public int ConnectionsCount() {
+        return neuralNetwork.NeuronConnections;
     }
 }
 
@@ -77,7 +72,8 @@ public enum NeuronType { Input, Output, Hidden }
 public class Sensor {
     public float GetValue() {
         // Get the sensor value (e.g., from a game object or an external source)
-        return 0; // Placeholder
+        float val = Random.Range(-1f, 1f);
+        return val;
     }
 }
 
@@ -85,5 +81,6 @@ public class Action {
     public void Execute(float signal) {
         // Perform the action based on the signal
         // Example: move a game object, change a state, etc.
+
     }
 }

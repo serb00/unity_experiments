@@ -3,6 +3,8 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 
 public class NeuralNetworkVisualizer : MonoBehaviour {
+    
+#region Attributes
     public GameObject NeuronPrefab;
     public GameObject ConnectionPrefab;
     public GameObject SelfConnectionPrefab;
@@ -25,11 +27,12 @@ public class NeuralNetworkVisualizer : MonoBehaviour {
     private readonly Color colorMid = Color.white;
     private readonly Color colorMax = Color.green;
 
+#endregion Attributes
 
     void Start() {
         if (BrainInstance == null) {
             // Create a default Brain
-            BrainInstance = new Brain(302, 80, 40, 2, 40, 1);
+            BrainInstance = new Brain(20, 4, 5, 2, 40, 1);
         }
 
         
@@ -171,15 +174,6 @@ public class NeuralNetworkVisualizer : MonoBehaviour {
         return Margin + spacing * index;
     }
 
-#endregion DrawingNeurons
-
-    private void UpdateGraph() {
-        // Update neurons' colors based on their output values
-        for (int i = 0; i < BrainInstance.NeuronsCount(); i++) {
-            UpdateNeuronColor(neuronGameObjects[i], BrainInstance.GetNeuron(i));
-        }
-    }
-
     private void UpdateNeuronColor(GameObject neuronGO, float outputValue) {
         var image = neuronGO.GetComponent<Image>();
         // Set the color based on the output value: red-white-green gradient
@@ -192,6 +186,14 @@ public class NeuralNetworkVisualizer : MonoBehaviour {
         }
     }
 
-    // ... Implement other utility methods as before ...
+#endregion DrawingNeurons
+
+    private void UpdateGraph() {
+        // Update neurons' colors based on their output values
+        for (int i = 0; i < BrainInstance.NeuronsCount(); i++) {
+            UpdateNeuronColor(neuronGameObjects[i], BrainInstance.GetNeuron(i));
+        }
+    }
+
 }
 

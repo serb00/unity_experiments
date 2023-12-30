@@ -2,9 +2,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class NeuralNetwork {
+
+#region Attributes
     public List<Neuron> Neurons { get; private set; }
     public int NeuronConnections { get; private set; }
     public int SignalPasses { get; private set; }
+
+#endregion Attributes
+
+#region Constructors
 
     public NeuralNetwork(int numNeurons, int minConnections, int maxConnections, int signalPasses) {
         Neurons = new List<Neuron>();
@@ -12,6 +18,8 @@ public class NeuralNetwork {
         NeuronConnections = 0;
         InitializeNetwork(numNeurons, minConnections, maxConnections);
     }
+
+#endregion Constructors
 
     private void InitializeNetwork(int numNeurons, int minConnections, int maxConnections) {
         // Create Neurons
@@ -40,6 +48,8 @@ public class NeuralNetwork {
         }
     }
 
+#region NeuronHelpers
+
     public float GetNeuronValue(int neuronID){
         return Neurons[neuronID].OutputValue;
     }
@@ -47,5 +57,7 @@ public class NeuralNetwork {
     public void SetNeuronValue(int neuronIndex, float val){
         Neurons[neuronIndex].SetOutputValue(val);
     } 
+
+#endregion NeuronHelpers
 }
 

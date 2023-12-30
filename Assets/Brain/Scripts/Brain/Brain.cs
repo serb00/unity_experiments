@@ -1,13 +1,18 @@
 using UnityEngine;
 using System.Collections.Generic;
-using System.Linq;
 
 public class Brain {
+    
+#region Attributes
     private NeuralNetwork neuralNetwork;
     public int numInputNeurons;
     public int numOutputNeurons;
     private Dictionary<int, Sensor> inputMappings;
     private Dictionary<int, Action> outputMappings;
+
+#endregion Attributes
+
+#region Constructors
 
     public Brain(int totalNeurons, int numInputs, int numOutputs, int minConnections, int maxConnections, int signalPasses) {
         numInputNeurons = numInputs;
@@ -18,15 +23,17 @@ public class Brain {
         InitializeMappings();
     }
 
+#endregion Constructors
+
     private void InitializeMappings() {
         // Initialize inputMappings and outputMappings
         for (int i = 0; i < numInputNeurons; i++)
         {
-            inputMappings[i] = new Sensor();
+            inputMappings[i] = new Sensor(i);
         }
         for (int i = 0; i < numOutputNeurons; i++)
         {
-            outputMappings[i] = new Action();
+            outputMappings[i] = new Action(i);
         }
     }
 
@@ -46,6 +53,8 @@ public class Brain {
         }
     }
 
+#region NeuronHelpers
+
     public IEnumerable<Neuron> GetAllNeurons() {
         return neuralNetwork.Neurons;
     }
@@ -63,6 +72,8 @@ public class Brain {
     public int ConnectionsCount() {
         return neuralNetwork.NeuronConnections;
     }
+
+#endregion NeuronHelpers
 }
 
 public enum NeuronType { Input, Output, Hidden }
@@ -70,6 +81,11 @@ public enum NeuronType { Input, Output, Hidden }
 
 // Dummy Sensor and Action classes for demonstration purposes
 public class Sensor {
+    int ID;
+
+    public Sensor(int i){
+        ID = i;
+    }
     public float GetValue() {
         // Get the sensor value (e.g., from a game object or an external source)
         float val = Random.Range(-1f, 1f);
@@ -78,9 +94,15 @@ public class Sensor {
 }
 
 public class Action {
+    int ID;
+    public Action(int i){
+        ID = i;
+    }
     public void Execute(float signal) {
         // Perform the action based on the signal
         // Example: move a game object, change a state, etc.
-
+        if (signal > 0.7f) {
+            Debug.Log($"Action executed by #{ID}");
+        }
     }
 }
